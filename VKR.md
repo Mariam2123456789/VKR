@@ -296,7 +296,7 @@ colnames(ECM_LE11) <- c("Country", "GDP", "pvalue","ECM", "pvalue")
 write.xlsx(ECM_LE1, file = "/Users/mariammaloan/Desktop/модельecmпередел 2.xlsx")
 
 
-#### ECM by country:УДАЛИТЬ   log(LE) ~ log(GDP per capita) + log(POP) ####
+#### ECM by country:   log(LE) ~ log(GDP per capita) + log(POP) ####
 
 #данные data43
 data44 <- read_excel("Desktop/data43.xlsx")
@@ -844,7 +844,7 @@ sum(H < 0.1)
 ####################
 
 
-#### нет Для первого кластера PVECM####
+#### Для первого кластера PVECM####
 id <- NULL
 i <- NULL
 for (j in 1:41) {
@@ -955,7 +955,7 @@ Y <- Y[, - c(1)] %>% as.matrix()
 pedroni99(X, Y)
 
 
-####есть Для третьего кластера PVECM####
+#### Для третьего кластера PVECM####
 id <- NULL
 i <- NULL
 for (j in 1:27) {
@@ -1062,27 +1062,6 @@ Y <- data45 %>% dplyr::mutate(id = as.factor(id)) %>%
 X <- X[, - c(1)] %>% as.matrix()
 Y <- Y[, - c(1)] %>% as.matrix()
 pedroni99(X, Y)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #### кластеризация только по LE и GDP ####
@@ -1331,28 +1310,6 @@ Y <- data45 %>% dplyr::mutate(id = as.factor(id)) %>%
 X <- X[, - c(1)] %>% as.matrix()
 Y <- Y[, - c(1)] %>% as.matrix()
 pedroni99(X, Y)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #### кластеризация по всем параметрам + коэф джинни ####
