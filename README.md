@@ -1,4 +1,4 @@
-# VKR
+# курсовая
 library(AER)
 library(foreign)
 library(sandwich)
@@ -97,7 +97,7 @@ influencePlot(mod2)
 N <- which(Cook > 0.01)
 Data3 <- newdata2[-N,]
 View(Data3)
-# осталось 816 наблюдений
+#осталось 816 наблюдений
 summary(Data3)
 describe(Data3)
 write.xlsx(describe(Data3), "/Users/mariammaloan/Desktop/describe.xlsx")
@@ -114,7 +114,7 @@ plot(mod4, which =3)
 boxCox(mod4)
 vif(mod4)
 bptest(mod4)
-# есть м/к в Health_expenditure_per_capita, есть г/к
+#есть м/к в Health_expenditure_per_capita, есть г/к
 
 V <- vcovHC(mod4)
 coeftest(mod4, vcov. = V)
@@ -140,7 +140,7 @@ write.xlsx(mod6, file = "/Users/mariammaloan/Desktop/модель6.xlsx")
 mod7 <- lm(Life_exp ~ Fertility_rate, data = newdata2)
 summary(mod7)
 
-
+# панельные данные
 m.pooled <- plm(Life_exp~GDP+Inflation+Mortality_infant+Agriculture+Prevalence_HIV+Tuberculosis
                   +Health_expenditure_from_GDP + Fertility_rate + Exports + I(Health_expenditure_from_GDP^2),  data = Data3, model = "pooling")
 m.re <- plm(Life_exp~GDP+Inflation+Mortality_infant+Agriculture+Prevalence_HIV+Tuberculosis
@@ -163,7 +163,7 @@ htmlreg(list(m.pooled, m.re, m.fe), file = "htmlreg_table.xlsx", single.row = 1)
 stargazer(m.pooled, m.re, m.fe, out = "stargazer_table.html", single.row = TRUE)
 
 
-###Модель с данными за 2015 год
+### Модель с данными за 2015 год
 #чистим данные
 Data5 <- (Data, Year == 2015)
 View(Data5)
@@ -199,7 +199,7 @@ write.xlsx(mod11, file = "/Users/mariammaloan/Desktop/модель11.xlsx")
 leaps <-regsubsets(Life_exp ~ ., data=Data8[,-1], nbest=4)
 plot(leaps, scale="adjr2", col = rainbow(50))
 
-###кластеризация для 2015 года
+### кластеризация для 2015 года
 data_scale <- scale(Data8[,-1])
 data_scale
 data_dist <- dist(data_scale)
@@ -216,7 +216,7 @@ View(Data_group_mean)
 data_chart <- as.data.frame(Data8)
 ggplot(data_chart, aes(Life_exp)) + geom_density(fill = "#258054", alpha = 0.5) + facet_grid(~ cluster)
 View(Data8)
-#метод главных компонент
+# метод главных компонент
 Data9 <- dplyr::select(Data8, - cluster)
 Data9.1 <- data.frame(Data9)
 View(Data9.1)
@@ -250,7 +250,7 @@ Data_clust4 <- filter(mod_pa$data.clust, clust == 4)
 Data_cluster <- mod_pa$data.clust %>% group_by(clust) %>% summarise_all(mean)
 View(Data_cluster)
 write.xlsx(Data_cluster, "/Users/mariammaloan/Desktop/кластер.xlsx")
-### попробуем через логистическую регрессию
+### логистическая регрессия
 View(Data9)
 Data10 <- data.frame(Data9)
 mean(Data10$Life_exp)
@@ -329,7 +329,7 @@ s10 <- optimalCutoff(Data10$Life_exp, fitted(mod30))
 hitmiss(mod30, k = s10)
 plotROC(Data10$Life_exp, fitted(mod30))
 summary(mod30)
-#######ЛАССО#######
+### ЛАССО
 #лассо регрессия (Data11 - это только регрессоры)
 Data11 <- dplyr::select(Data9, - Life_exp, - Country)
 model <- glmnet(Data11, Data9$Life_exp, alpha = 1)
